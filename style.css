@@ -1,0 +1,26 @@
+.kt-button {
+    color: #484846;
+    font-family: Gotham Pro Medium;
+    font-size: 14px;
+    opacity: .8;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid hsla(0,0%,59.2%,.5);
+    background: none;
+}
+.kt-panel {
+    margin-top: 15px;
+    margin-left: 20px;
+    display: flex;
+    justify-content: end;
+    padding-right: 40px;
+}
+
+.kt-button-success {
+    color: green;
+}

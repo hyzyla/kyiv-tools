@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "Kyiv tools",
+  "version": "1.0",
+  "description": "",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://1551.gov.ua/*"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "hyzyla@gmail.com",
+      "strict_min_version": "42.0"
+    }
+  },  
+  "permissions": [
+    "https://*.1551.gov.ua/*",
+    "https://1551-back.kyivcity.gov.ua/*"
+  ]
+}
