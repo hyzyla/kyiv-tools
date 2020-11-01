@@ -1,5 +1,10 @@
 .kt-button {
-    color: #484846;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: antiquewhite;
     font-family: Gotham Pro Medium;
     font-size: 14px;
     opacity: .8;
@@ -10,17 +15,24 @@
     letter-spacing: normal;
     height: 40px;
     border-radius: 8px;
-    border: 1px solid hsla(0,0%,59.2%,.5);
-    background: none;
+    border: 1px solid hsla(0, 0%, 59.2%, .5);
 }
+
 .kt-panel {
     margin-top: 15px;
     margin-left: 20px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     padding-right: 40px;
 }
 
 .kt-button-success {
-    color: green;
+    cursor: default;
+    background-color: #baff85;
+}
+
+
+.kt-button-loading {
+    cursor: wait;  
+    background-color: #ffff90;
 }
