@@ -181,9 +181,6 @@ async function createTicket(number) {
         formData.append('location_lng', ticket.location_lng);
     }
     formData.append('private', '0');
-    console.log(formData);
-    await sleep(5000);
-    return;
     const response = await fetch(`${BACKEND_SERVER}/api/tickets`, {
         method: 'POST',
         body: formData,
@@ -203,9 +200,9 @@ async function handleCloneButtonClick(evt) {
         const number = getTicketNumber();
         await createTicket(number);
 
-        // const tickets = getClonedTickets();
-        // const storageItem = JSON.stringify([...tickets, number]);
-        // localStorage.setItem(SUBMITTED_STORAGE_KEY, storageItem);
+        const tickets = getClonedTickets();
+        const storageItem = JSON.stringify([...tickets, number]);
+        localStorage.setItem(SUBMITTED_STORAGE_KEY, storageItem);
 
         button.setCopiedState();
     } catch (e) {
