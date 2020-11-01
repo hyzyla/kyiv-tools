@@ -7,6 +7,10 @@
     "48": "icons/icon-48.png",
     "96": "icons/icon-48.png"
   },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": ["https://1551.gov.ua/*"],

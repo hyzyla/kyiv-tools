@@ -8,6 +8,22 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function sendMessagePromise(item) {
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage(item, response => {
+          if(response.ok) {
+              resolve(response.data);
+          } else {
+              reject('Something wrong');
+          }
+      });
+  });
+}
+
+function fromBase64String(value) {
+  return Uint8Array.from(atob(value), c => c.charCodeAt(0))
+}
+
 async function waitTicketContainer() {
   while (true) {
     console.log('Wait for ticket container...');
@@ -140,12 +156,10 @@ async function createTicket(number) {
   if (ticket.files) {
     for (const file of ticket.files) {
       const filename = file.url.match(/\w+\.\w+$/)[0];
-      const response = await fetch(file.url, {
-        // mode: 'no-cors',
-      });
-      const content = await response.blob();
-      console.log(response);
-      formData.append('images[]', content, filename);
+      const content = await sendMessagePromise({ query: "fetchFile", url: file.url });
+      const arrayBuffer = fromBase64String(content.content);
+      const blob = new Blob([arrayBuffer], { type: content.type });
+      formData.append('images[]', blob, filename);
     }
   }
   chrome.runtime.sendMessage({ content: "message from the content script" });
@@ -166,7 +180,6 @@ async function createTicket(number) {
     formData.append('location_lng', ticket.location_lng);
   }
   formData.append('private', '0');
-
   const response = await fetch(`${BACKEND_SERVER}/api/tickets`, {
     method: 'POST',
     body: formData,
@@ -181,12 +194,11 @@ async function createTicket(number) {
 
 async function handleCloneButtonClick(evt) {
   const number = getTicketNumber();
-  const ticket = await createTicket(number);
+  await createTicket(number);
 
   const tickets = getClonedTickets();
   const storageItem = JSON.stringify([...tickets, number]);
   localStorage.setItem(SUBMITTED_STORAGE_KEY, storageItem);
-  console.log(evt);
   evt.target.classList.add("kt-button-success");
   evt.target.innerText = SUCCESS_BUTTON_TEXT;
 }
